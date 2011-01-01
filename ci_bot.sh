@@ -140,6 +140,7 @@ if [[ -n $SYNC ]]; then
     sync_start_message="������ | <i>Syncing sources!!</i>
 <b>• ROM:</b> <code>$ROM_NAME</code>
 <b>• DEVICE:</b> <code>$DEVICE</code>
+<b>• AURHOR:</b> <code>$CONFIG_AUTHOR</code>
 <b>• JOBS:</b> <code>$CONFIG_SYNC_JOBS Cores</code>
 <b>• DIRECTORY:</b> <code>$(pwd)</code>"
 
@@ -168,6 +169,7 @@ if [[ -n $SYNC ]]; then
         sync_finished_message="������ | <i>Sources synced!!</i>
 <b>• ROM:</b> <code>$ROM_NAME</code>
 <b>• DEVICE:</b> <code>$DEVICE</code>
+<b>• AURHOR:</b> <code>$CONFIG_AUTHOR</code>
 <b>• JOBS:</b> <code>$CONFIG_SYNC_JOBS Cores</code>
 <b>• DIRECTORY:</b> <code>$(pwd)</code>
 <i>Syncing took $MINUTES minutes(s) and $SECONDS seconds(s)</i>"
@@ -192,6 +194,7 @@ fi
 build_start_message="������ | <i>Compiling ROM...</i>
 <b>• ROM:</b> <code>$ROM_NAME</code>
 <b>• DEVICE:</b> <code>$DEVICE</code>
+<b>• AURHOR:</b> <code>$CONFIG_AUTHOR</code>
 <b>• JOBS:</b> <code>$CONFIG_COMPILE_JOBS Cores</code>
 <b>• TYPE:</b> <code>$([ -n "$OFFICIAL" ] && echo "Official" || echo "Unofficial")</code>
 <b>• VARIANT:</b> <code>$VARIANT</code>"
