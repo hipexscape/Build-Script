@@ -295,7 +295,6 @@ else
     zip_file_md5sum=$(md5sum $zip_file | awk '{print $1}')
     zip_file_size=$(ls -sh $zip_file | awk '{print $1}')
 
-    mv "$zip_file" ../ # Move the ZIP file to the parent directory for pushing to GitHub Releases later.
 
     build_finished_message="������ | <i>ROM compiled!!</i>
 <b>• ROM:</b> <code>$ROM_NAME</code>
