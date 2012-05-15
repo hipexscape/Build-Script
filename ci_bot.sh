@@ -9,8 +9,8 @@ CONFIG_BOT_TOKEN="" # Your HTTP API bot token
 CONFIG_AUTHOR=""                                           # The author of the build
 CONFIG_GAPPS_FLAG=""                                   # The flag which is to be exported as true to make a GAPPs build
 CONFIG_OFFICIAL_FLAG=""                             # The flag which is to be exported as true to make an official build
-CONFIG_SYNC_JOBS=0                                               # How many jobs (CPU cores) to assign for the repo sync task.
-CONFIG_COMPILE_JOBS=0                                            # How many jobs (CPU cores) to assign for the make task.
+CONFIG_SYNC_JOBS=$(nproc --all)                                               # How many jobs (CPU cores) to assign for the repo sync task.
+CONFIG_COMPILE_JOBS=$(nproc --all)                                            # How many jobs (CPU cores) to assign for the make task.
 CONFIG_SYNC="false"                                           # Set as true if you want to sync repo
 CONFIG_SYNC_REPO=""                              # Config sync eg- https://github.com/crdroidandroid/android.git -b 14.0
 
