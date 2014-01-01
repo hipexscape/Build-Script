@@ -122,8 +122,7 @@ send_file() {
 upload_file() {
     RESPONSE=$(curl -T "$1" https://pixeldrain.com/api/file/)
     HASH=$(echo "$RESPONSE" | jq -r '.id')
-
-    echo "https://pixeldrain.com/api/file/$HASH"
+    echo "https://pixeldrain.com/u/$HASH"
 }
 
 # Cleanup Files. Nuke all of the files from previous runs.
