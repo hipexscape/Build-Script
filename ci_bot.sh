@@ -13,6 +13,7 @@ CONFIG_SYNC_JOBS=$(nproc --all)                                               # 
 CONFIG_COMPILE_JOBS=$(nproc --all)                                            # How many jobs (CPU cores) to assign for the make task.
 CONFIG_SYNC="false"                                           # Set as true if you want to sync repo
 CONFIG_SYNC_REPO=""                              # Config sync eg- https://github.com/crdroidandroid/android.git -b 14.0
+CONFIG_BUILD_VARIANT=""                                                  # Set the build variant gapps/vanilla
 
 # Color Constants. Required variables for logging purposes.
 RED=$(tput setaf 1)
@@ -21,8 +22,6 @@ YELLOW=$(tput setaf 3)
 BOLD=$(tput bold)
 RESET=$(tput sgr0)
 BOLD_GREEN=${BOLD}$(tput setaf 2)
-
-VARIANT="Vanilla"
 
 # Post Constants. Required variables for posting purposes.
 DEVICE="$(sed -e "s/^.*_//" -e "s/-.*//" <<<"$CONFIG_LUNCH")"
