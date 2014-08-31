@@ -139,7 +139,8 @@ fi
 if [ "$CONFIG_SYNC" == true ]; then
     # Send a notification that the syncing process has started.
 
-    sync_start_message="������ | <i>Syncing sources!!</i>
+    sync_start_message="***** | <i>Syncing sources!!</i>
+
 <b>• ROM:</b> <code>$ROM_NAME</code>
 <b>• DEVICE:</b> <code>$DEVICE</code>
 <b>• AURHOR:</b> <code>$CONFIG_AUTHOR</code>
@@ -169,7 +170,8 @@ if [ "$CONFIG_SYNC" == true ]; then
         MINUTES=$((($DIFFERENCE % 3600) / 60))
         SECONDS=$(((($DIFFERENCE % 3600) / 60) / 60))
 
-        sync_finished_message="������ | <i>Sources synced!!</i>
+        sync_finished_message="**** | <i>Sources synced!!</i>
+
 <b>• ROM:</b> <code>$ROM_NAME</code>
 <b>• DEVICE:</b> <code>$DEVICE</code>
 <b>• AURHOR:</b> <code>$CONFIG_AUTHOR</code>
@@ -179,7 +181,7 @@ if [ "$CONFIG_SYNC" == true ]; then
 
         edit_message "$sync_finished_message" "$CONFIG_CHATID" "$sync_message_id"
     else
-        sync_failed_message="������ | <i>Syncing sources failed!!</i>
+        sync_failed_message="***** | <i>Syncing sources failed!!</i>
     
 <i>Trying to compile the ROM now...</i>"
 
@@ -194,7 +196,8 @@ fi
 
 # Send a notification that the build process has started.
 
-build_start_message="������ | <i>Compiling ROM...</i>
+build_start_message="****** | <i>Compiling ROM...</i>
+
 <b>• ROM:</b> <code>$ROM_NAME</code>
 <b>• DEVICE:</b> <code>$DEVICE</code>
 <b>• AURHOR:</b> <code>$CONFIG_AUTHOR</code>
@@ -234,7 +237,7 @@ if [ "$CONFIG_USE_BRUNCH" == yes ]; then
     else
         echo -e "$RED\nFailed to lunch '$DEVICE'$RESET"
 
-        build_failed_message="������ | <i>ROM compilation failed...</i>
+        build_failed_message="****** | <i>ROM compilation failed...</i>
     
 <i>Failed at lunching $DEVICE...</i>"
 
@@ -269,7 +272,7 @@ else
     else
         echo -e "$RED\nFailed to lunch '$DEVICE'$RESET"
 
-        build_failed_message="������ | <i>ROM compilation failed...</i>
+        build_failed_message="****** | <i>ROM compilation failed...</i>
     
 <i>Failed at lunching $DEVICE...</i>"
 
@@ -286,7 +289,7 @@ MINUTES=$((($DIFFERENCE % 3600) / 60))
 
 if [ -s "out/error.log" ]; then
     # Send a notification that the build has failed.
-    build_failed_message="������ | <i>ROM compilation failed...</i>
+    build_failed_message="****** | <i>ROM compilation failed...</i>
     
 <i>Check out the log below!</i>"
 
@@ -302,7 +305,8 @@ else
     zip_file_size=$(ls -sh $zip_file | awk '{print $1}')
 
 
-    build_finished_message="������ | <i>ROM compiled!!</i>
+    build_finished_message="***** | <i>ROM compiled!!</i>
+
 <b>• ROM:</b> <code>$ROM_NAME</code>
 <b>• DEVICE:</b> <code>$DEVICE</code>
 <b>• TYPE:</b> <code>$([ -n "$OFFICIAL" ] && echo "Official" || echo "Unofficial")</code>
