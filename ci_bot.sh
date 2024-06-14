@@ -1,19 +1,19 @@
 #!/bin/bash
 
 # Script Configuration. Adjust the variables as per your needs.
-CONFIG_LUNCH=""                                  # (MANDATORY) Lunch command , you should not leave it empty device codename get pulled from the command! e.g. lineage_ysl-userdebug
-CONFIG_TARGET="bacon"                                             # (MANDATORY) Compilation target. e.g. bacon or bootimage [Default is bacon!]
-CONFIG_USE_BRUNCH="no"                                            # (MANDATORY) yes|no Set to yes if you need to use brunch to build else no for lunch and bacon
-CONFIG_CHATID="-"                                    # Your telegram group/channel chatid
-CONFIG_BOT_TOKEN="" # Your HTTP API bot token
-CONFIG_AUTHOR=""                                           # The author of the build
-CONFIG_GAPPS_FLAG=""                                   # The flag which is to be exported as true to make a GAPPs build
-CONFIG_OFFICIAL_FLAG=""                             # The flag which is to be exported as true to make an official build
-CONFIG_SYNC_JOBS=$(nproc --all)                                               # How many jobs (CPU cores) to assign for the repo sync task.
-CONFIG_COMPILE_JOBS=$(nproc --all)                                            # How many jobs (CPU cores) to assign for the make task.
-CONFIG_SYNC="false"                                           # Set as true if you want to sync repo
-CONFIG_SYNC_REPO=""                              # Config sync eg- https://github.com/crdroidandroid/android.git -b 14.0
-CONFIG_BUILD_VARIANT=""                                                  # Set the build variant gapps/vanilla
+CONFIG_LUNCH=""
+CONFIG_TARGET="bacon"
+CONFIG_USE_BRUNCH="no"
+CONFIG_CHATID="-"
+CONFIG_BOT_TOKEN=""
+CONFIG_AUTHOR=""
+CONFIG_GAPPS_FLAG=""
+CONFIG_OFFICIAL_FLAG=""
+CONFIG_SYNC_JOBS=$(nproc --all)
+CONFIG_COMPILE_JOBS=$(nproc --all)
+CONFIG_SYNC="false"
+CONFIG_SYNC_REPO=""
+CONFIG_BUILD_VARIANT=""
 
 # Color Constants. Required variables for logging purposes.
 RED=$(tput setaf 1)
