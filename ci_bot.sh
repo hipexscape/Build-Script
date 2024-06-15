@@ -202,7 +202,7 @@ build_start_message="****** | <i>Compiling ROM...</i>
 <b>• AUTHOR:</b> <code>$CONFIG_AUTHOR</code>
 <b>• JOBS:</b> <code>$CONFIG_COMPILE_JOBS Cores</code>
 <b>• TYPE:</b> <code>$([ -n "$OFFICIAL" ] && echo "Official" || echo "Unofficial")</code>
-<b>• VARIANT:</b> <code>$VARIANT</code>"
+<b>• VARIANT:</b> <code>$CONFIG_BUILD_VARIANT</code>"
 
 build_message_id=$(send_message "$build_start_message" "$CONFIG_CHATID")
 
@@ -309,7 +309,7 @@ else
 <b>• ROM:</b> <code>$ROM_NAME</code>
 <b>• DEVICE:</b> <code>$DEVICE</code>
 <b>• TYPE:</b> <code>$([ -n "$OFFICIAL" ] && echo "Official" || echo "Unofficial")</code>
-<b>• VARIANT:</b> <code>$VARIANT</code>
+<b>• VARIANT:</b> <code>$CONFIG_BUILD_VARIANT</code>
 <b>• SIZE:</b> <code>$zip_file_size</code>
 <b>• MD5SUM:</b> <code>$zip_file_md5sum</code>
 <b>• DOWNLOAD:</b> $zip_file_url
