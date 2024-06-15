@@ -13,6 +13,7 @@ CONFIG_SYNC_JOBS=$(nproc --all)
 CONFIG_COMPILE_JOBS=$(nproc --all)
 CONFIG_SYNC="false"
 CONFIG_SYNC_REPO=""
+CONFIG_SYNC_BRANCH=""
 CONFIG_BUILD_VARIANT=""
 
 # Color Constants. Required variables for logging purposes.
@@ -150,7 +151,7 @@ if [ "$CONFIG_SYNC" == true ]; then
     SYNC_START=$(TZ=Asia/Dhaka date +"%s")
 
     echo -e "$BOLD_GREEN\nStarting to sync sources now...$RESET\n"
-       repo init -u "$CONFIG_SYNC_REPO" --git-lfs
+       repo init -u "$CONFIG_SYNC_REPO" -b "$CONFIG_SYNC_BRANCH" --git-lfs
     if ! repo sync -c --jobs-network=$CONFIG_SYNC_JOBS -j$CONFIG_SYNC_JOBS --jobs-checkout=$CONFIG_SYNC_JOBS --optimized-fetch --prune --force-sync --no-clone-bundle --no-tags; then
         echo -e "$RED\nInitial sync has failed!!$RESET" && echo -e "$BOLD_GREEN\nTrying to sync again with lesser arguments...$RESET\n"
 

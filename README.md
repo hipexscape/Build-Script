@@ -42,8 +42,11 @@ CONFIG_SYNC_JOBS=8 and CONFIG_COMPILE_JOBS=8
 # Set as true if you want to config repo sync
 CONFIG_SYNC=""
 
-# Config sync eg- https://github.com/crdroidandroid/android.git -b 14.0
+# Config sync eg- https://github.com/crdroidandroid/android.git
 CONFIG_SYNC_REPO=""
+
+# Config branch from repo sync eg- 14.0
+CONFIG_SYNC_BRANCH=""
 
 # Set the build variant gapps/vanilla (edit as per rom)
 CONFIG_BUILD_VARIANT=""
