@@ -302,11 +302,11 @@ else
     zip_file_url=$(upload_file "$zip_file")
     zip_file_md5sum=$(md5sum $zip_file | awk '{print $1}')
     zip_file_size=$(ls -sh $zip_file | awk '{print $1}')
-
+    ROM_FILE=$(grep -rl --include=\*.zip out/target/product/$DEVICE)
 
     build_finished_message="***** | <i>ROM compiled!!</i>
 
-<b>• ROM:</b> <code>$ROM_NAME</code>
+<b>• FILE_NAME:</b> <code>$ROM_FILE</code>
 <b>• DEVICE:</b> <code>$DEVICE</code>
 <b>• TYPE:</b> <code>$([ -n "$OFFICIAL" ] && echo "Official" || echo "Unofficial")</code>
 <b>• VARIANT:</b> <code>$CONFIG_BUILD_VARIANT</code>
