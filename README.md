@@ -33,9 +33,6 @@ CONFIG_AUTHOR=""
 # This flag which is to be exported as true to make a GAPPs build (Rom specific)
 CONFIG_GAPPS_FLAG=""
 
-# Set the rom specific official flag eg- DRPIDX_BUILD_OFFICIAL
-CONFIG_OFFICIAL_FLAG=""
-
 # How many jobs (CPU cores) to assign for the repo sync and build task
 CONFIG_SYNC_JOBS=8 and CONFIG_COMPILE_JOBS=8
 
