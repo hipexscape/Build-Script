@@ -8,7 +8,6 @@ CONFIG_CHATID="-"
 CONFIG_BOT_TOKEN=""
 CONFIG_AUTHOR=""
 CONFIG_GAPPS_FLAG=""
-CONFIG_OFFICIAL_FLAG=""
 CONFIG_SYNC_JOBS=$(nproc --all)
 CONFIG_COMPILE_JOBS=$(nproc --all)
 CONFIG_SYNC="false"
@@ -49,14 +48,6 @@ while [[ $# -gt 0 ]]; do
             exit 1
         fi
         ;;
-    -o | --official)
-        if [ -n "$CONFIG_OFFICIAL_FLAG" ]; then
-            OFFICIAL="1"
-        else
-            echo -e "$RED\nERROR: Please specify the flag to export for official build in the configuration!!$RESET\n"
-            exit 1
-        fi
-        ;;
     -p | --purge)
         rclone purge "oned:${UPLOAD_DIRECTORY}"
         exit 0
@@ -73,7 +64,6 @@ Options:
     -s, --sync            Sync sources before building.
     -c, --clean           Clean build directory before compilation.
     -g, --gapps           Build the GAPPs variant during compilation.
-    -o, --official        Build the official variant during compilation.
     -p, --purge           Purges the specified upload directory for the index.\n"
         exit 1
         ;;
@@ -201,7 +191,6 @@ build_start_message="****** | <i>Compiling ROM...</i>
 <b>• DEVICE:</b> <code>$DEVICE</code>
 <b>• AUTHOR:</b> <code>$CONFIG_AUTHOR</code>
 <b>• JOBS:</b> <code>$CONFIG_COMPILE_JOBS Cores</code>
-<b>• TYPE:</b> <code>$([ -n "$OFFICIAL" ] && echo "Official" || echo "Unofficial")</code>
 <b>• VARIANT:</b> <code>$CONFIG_BUILD_VARIANT</code>"
 
 build_message_id=$(send_message "$build_start_message" "$CONFIG_CHATID")
@@ -219,13 +208,6 @@ if [ "$CONFIG_USE_BRUNCH" == yes ]; then
             export "${CONFIG_GAPPS_FLAG}=true"
         else
             export "${CONFIG_GAPPS_FLAG}=false"
-        fi
-    fi
-    if [[ -n $CONFIG_OFFICIAL_FLAG ]]; then
-        if [[ -n $OFFICIAL ]]; then
-            export "${CONFIG_OFFICIAL_FLAG}=true"
-        else
-            export "${CONFIG_OFFICIAL_FLAG}=false"
         fi
     fi
     lunch "$CONFIG_LUNCH"
@@ -254,13 +236,6 @@ else
             export "${CONFIG_GAPPS_FLAG}=true"
         else
             export "${CONFIG_GAPPS_FLAG}=false"
-        fi
-    fi
-    if [[ -n $CONFIG_OFFICIAL_FLAG ]]; then
-        if [[ -n $OFFICIAL ]]; then
-            export "${CONFIG_OFFICIAL_FLAG}=true"
-        else
-            export "${CONFIG_OFFICIAL_FLAG}=false"
         fi
     fi
     lunch "$CONFIG_LUNCH"
@@ -307,7 +282,6 @@ else
 
 <b>• FILE_NAME:</b> <code>$zip_file</code>
 <b>• DEVICE:</b> <code>$DEVICE</code>
-<b>• TYPE:</b> <code>$([ -n "$OFFICIAL" ] && echo "Official" || echo "Unofficial")</code>
 <b>• VARIANT:</b> <code>$CONFIG_BUILD_VARIANT</code>
 <b>• SIZE:</b> <code>$zip_file_size</code>
 <b>• MD5SUM:</b> <code>$zip_file_md5sum</code>
