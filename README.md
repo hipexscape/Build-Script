@@ -47,4 +47,7 @@ CONFIG_SYNC_BRANCH=""
 
 # Set the build variant gapps/vanilla (edit as per rom)
 CONFIG_BUILD_VARIANT=""
+
+# Set the Seconday chat/channel ID (IT will only send error logs to that)
+CONFIG_ERROR_CHATID=""
 ```
