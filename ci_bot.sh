@@ -14,6 +14,7 @@ CONFIG_SYNC="false"
 CONFIG_SYNC_REPO=""
 CONFIG_SYNC_BRANCH=""
 CONFIG_BUILD_VARIANT=""
+CONFIG_ERROR_CHATID=""
 
 # Color Constants. Required variables for logging purposes.
 RED=$(tput setaf 1)
@@ -113,6 +114,22 @@ upload_file() {
     RESPONSE=$(curl -T "$1" https://pixeldrain.com/api/file/)
     HASH=$(echo "$RESPONSE" | jq -r '.id')
     echo "https://pixeldrain.com/u/$HASH"
+}
+
+send_message_to_error_chat() {
+    local response=$(curl -s -X POST "$BOT_MESSAGE_URL" -d chat_id="$CONFIG_ERROR_CHATID" \
+        -d "parse_mode=html" \
+        -d "disable_web_page_preview=true" \
+        -d text="$1")
+    local message_id=$(echo "$response" | jq ".result | .message_id")
+    echo "$message_id"
+}
+
+send_file_to_error_chat() {
+    curl --progress-bar -F document=@"$1" "$BOT_FILE_URL" \
+        -F chat_id="$CONFIG_ERROR_CHATID" \
+        -F "disable_web_page_preview=true" \
+        -F "parse_mode=html"
 }
 
 # Cleanup Files. Nuke all of the files from previous runs.
@@ -267,8 +284,8 @@ if [ -s "out/error.log" ]; then
     
 <i>Check out the log below!</i>"
 
-    edit_message "$build_failed_message" "$CONFIG_CHATID" "$build_message_id"
-    send_file "out/error.log" "$CONFIG_CHATID"
+    edit_message_to_error_chat "$build_failed_message" "$CONFIG_ERROR_CHATID" "$build_message_id"
+    send_file_to_error_chat "out/error.log" "$CONFIG_ERROR_CHATID"
 else
     ota_file=$(ls "$OUT"/*ota*.zip | tail -n -1)
     rm "$ota_file"
