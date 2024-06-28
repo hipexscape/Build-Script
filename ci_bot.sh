@@ -302,7 +302,7 @@ else
 <b>• VARIANT:</b> <code>$CONFIG_BUILD_VARIANT</code>
 <b>• SIZE:</b> <code>$zip_file_size</code>
 <b>• MD5SUM:</b> <code>$zip_file_md5sum</code>
-<b>• DOWNLOAD:</b> $zip_file_url
+<b>• DOWNLOAD:</b> $zip_file_url</code>
 <i>Compilation took $HOURS hours(s) and $MINUTES minutes(s)</i>"
 
     edit_message "$build_finished_message" "$CONFIG_CHATID" "$build_message_id"
