@@ -289,7 +289,6 @@ until [ -z "$(jobs -r)" ]; do
 <b>• DEVICE:</b> <code>$DEVICE</code>
 <b>• JOBS:</b> <code>$CONFIG_COMPILE_JOBS Cores</code>
 <b>• TYPE:</b> <code>$([ "$OFFICIAL" == "1" ] && echo "Official" || echo "Unofficial")</code>
-<b>• VARIANT:</b> <code>$VARIANT</code>
 <b>• PROGRESS:</b> <code>$(fetch_progress)</code>"
 
     edit_message "$build_progress_message" "$CONFIG_CHATID" "$build_message_id"
@@ -305,7 +304,6 @@ build_progress_message="🟡 | <i>Compiling ROM...</i>
 <b>• DEVICE:</b> <code>$DEVICE</code>
 <b>• JOBS:</b> <code>$CONFIG_COMPILE_JOBS Cores</code>
 <b>• TYPE:</b> <code>$([ "$OFFICIAL" == "1" ] && echo "Official" || echo "Unofficial")</code>
-<b>• VARIANT:</b> <code>$VARIANT</code>
 <b>• PROGRESS:</b> <code>$(fetch_progress)</code>"
 
 edit_message "$build_progress_message" "$CONFIG_CHATID" "$build_message_id"
@@ -342,7 +340,6 @@ else
 <b>• ROM:</b> <code>$ROM_NAME</code>
 <b>• DEVICE:</b> <code>$DEVICE</code>
 <b>• TYPE:</b> <code>$([ "$OFFICIAL" == "1" ] && echo "Official" || echo "Unofficial")</code>
-<b>• VARIANT:</b> <code>$VARIANT</code>
 <b>• SIZE:</b> <code>$zip_file_size</code>
 <b>• MD5SUM:</b> <code>$zip_file_md5sum</code>
 <b>• DOWNLOAD:</b> $zip_file_url
