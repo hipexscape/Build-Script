@@ -5,7 +5,7 @@ Created by @hipexscape
 
 - First fork this repo and fill the variables (defined below)
 - Clone this repo using curl
-- Then do bash script.sh
+- Then do bash script.sh -h
 - Done
 
 ### Variables 
