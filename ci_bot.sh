@@ -8,6 +8,7 @@ CONFIG_TARGET="bacon"
 # Telegram Configuration
 CONFIG_CHATID="-"
 CONFIG_BOT_TOKEN=""
+CONFIG_ERROR_CHATID=""
 
 # Turning off server after build or no
 POWEROFF=""
@@ -131,6 +132,22 @@ upload_ksau(){
     # curl -s https://raw.githubusercontent.com/ksauraj/global_index_source/master/setup | bash && ksau setup
     link=$(ksau -q upload "$1" Public/hanoip)
     echo "$link"
+}
+
+send_message_to_error_chat() {
+    local response=$(curl -s -X POST "$BOT_MESSAGE_URL" -d chat_id="$CONFIG_ERROR_CHATID" \
+        -d "parse_mode=html" \
+        -d "disable_web_page_preview=true" \
+        -d text="$1")
+    local message_id=$(echo "$response" | jq ".result | .message_id")
+    echo "$message_id"
+}
+
+send_file_to_error_chat() {
+    curl --progress-bar -F document=@"$1" "$BOT_FILE_URL" \
+        -F chat_id="$CONFIG_ERROR_CHATID" \
+        -F "disable_web_page_preview=true" \
+        -F "parse_mode=html"
 }
 
 fetch_progress() {
@@ -305,8 +322,8 @@ if [ -s "out/error.log" ]; then
     
 <i>Check out the log below!</i>"
 
-    edit_message "$build_failed_message" "$CONFIG_CHATID" "$build_message_id"
-    send_file "out/error.log" "$CONFIG_CHATID"
+    edit_message_to_error_chat "$build_failed_message" "$CONFIG_ERROR_CHATID" "$build_message_id"
+    send_file_to_error_chat "out/error.log" "$CONFIG_ERROR_CHATID"
 #     send_sticker "$STICKER_URL" "$CONFIG_CHATID"
 else
     ota_file=$(ls "$OUT"/*ota*.zip | tail -n -1)
