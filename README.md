@@ -27,6 +27,9 @@ CONFIG_BOT_TOKEN=""
 # Set the Seconday chat/channel ID (IT will only send error logs to that)
 CONFIG_ERROR_CHATID=""
 
+# Config PixelDrain api key (get it from https://pixeldrain.com/api)
+CONFIG_PDUP_APT=""
+
 # Turn off server after build (save resource)
 POWEROFF=""
 ```

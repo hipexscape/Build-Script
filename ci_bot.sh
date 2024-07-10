@@ -10,6 +10,9 @@ CONFIG_CHATID="-"
 CONFIG_BOT_TOKEN=""
 CONFIG_ERROR_CHATID=""
 
+# PixelDrain api keys to upload builds
+CONFIG_PDUP_API:""
+
 # Turning off server after build or no
 POWEROFF=""
 
@@ -122,7 +125,7 @@ pin_message() {
 }
 
 upload_file() {
-    RESPONSE=$(curl -T "$1" https://pixeldrain.com/api/file/)
+    RESPONSE=$(curl -T "$1" -u :"$CONFIG_PDUP_API" https://pixeldrain.com/api/file/)
     HASH=$(echo "$RESPONSE" | jq -r ".id")
 
     echo "https://pixeldrain.com/u/$HASH"
