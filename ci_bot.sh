@@ -131,12 +131,6 @@ upload_file() {
     echo "https://pixeldrain.com/u/$HASH"
 }
 
-upload_ksau(){
-    # curl -s https://raw.githubusercontent.com/ksauraj/global_index_source/master/setup | bash && ksau setup
-    link=$(ksau -q upload "$1" Public/hanoip)
-    echo "$link"
-}
-
 send_message_to_error_chat() {
     local response=$(curl -s -X POST "$BOT_MESSAGE_URL" -d chat_id="$CONFIG_ERROR_CHATID" \
         -d "parse_mode=html" \
