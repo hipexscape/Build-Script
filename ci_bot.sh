@@ -28,7 +28,7 @@ ROOT_DIRECTORY="$(pwd)"
 DEVICE="$(sed -e "s/^.*_//" -e "s/-.*//" <<<"$CONFIG_LUNCH")"
 ROM_NAME="$(sed "s#.*/##" <<<"$(pwd)")"
 OUT="$(pwd)/out/target/product/$DEVICE"
-STICKER_URL="https://index.sauraj.eu.org/api/raw/?path=/sticker.webp"
+STICKER_URL="https://raw.githubusercontent.com/Weebo354342432/reimagined-enigma/main/update.webp"
 
 # CLI parameters. Fetch whatever input the user has provided.
 while [[ $# -gt 0 ]]; do
