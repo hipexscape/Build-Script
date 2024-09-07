@@ -319,7 +319,7 @@ if [ -s "out/error.log" ]; then
 
     edit_message_to_error_chat "$build_failed_message" "$CONFIG_ERROR_CHATID" "$build_message_id"
     send_file_to_error_chat "out/error.log" "$CONFIG_ERROR_CHATID"
-#     send_sticker "$STICKER_URL" "$CONFIG_CHATID"
+    send_sticker "$STICKER_URL" "$CONFIG_CHATID"
 else
     ota_file=$(ls "$OUT"/*ota*.zip | tail -n -1)
     rm "$ota_file"
@@ -345,7 +345,7 @@ else
 
     edit_message "$build_finished_message" "$CONFIG_CHATID" "$build_message_id"
     pin_message "$CONFIG_CHATID" "$build_message_id"
-#     send_sticker "$STICKER_URL" "$CONFIG_CHATID"
+    send_sticker "$STICKER_URL" "$CONFIG_CHATID"
 fi
 
 if [[ $POWEROFF == true ]]; then
