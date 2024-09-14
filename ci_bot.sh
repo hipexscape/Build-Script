@@ -118,12 +118,6 @@ send_sticker() {
         -F "is_video=false"
 }
 
-pin_message() {
-    curl "$BOT_PIN_URL" \
-        -d chat_id="$1" \
-        -d message_id="$2"
-}
-
 upload_file() {
     RESPONSE=$(curl -T "$1" -u :"$CONFIG_PDUP_API" https://pixeldrain.com/api/file/)
     HASH=$(echo "$RESPONSE" | grep -Po '(?<="id":")[^"]*')
@@ -344,7 +338,6 @@ else
 <i>Compilation took $HOURS hours(s) and $MINUTES minutes(s)</i>"
 
     edit_message "$build_finished_message" "$CONFIG_CHATID" "$build_message_id"
-    pin_message "$CONFIG_CHATID" "$build_message_id"
     send_sticker "$STICKER_URL" "$CONFIG_CHATID"
 fi
 
