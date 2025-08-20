@@ -31,7 +31,7 @@ ROOT_DIRECTORY="$(pwd)"
 
 # Post Constants. Required variables for posting purposes.
 ROM_NAME="$(sed "s#.*/##" <<<"$(pwd)")"
-ANDROID_VERSION=$(grep -oP '(?<=android-)[0-9]+' .repo/manifests/default.xml | head -n1 || echo "N/A")
+ANDROID_VERSION=$(if [ -f ".repo/manifests/default.xml" ]; then grep -oP '(?<=android-)[0-9]+' .repo/manifests/default.xml | head -n1; else echo "N/A"; fi)
 OUT_DIR="$ROOT_DIRECTORY/out/target/product/$DEVICE"
 
 # --- Helper Functions ---
@@ -94,6 +94,13 @@ send_message() {
     local message="$1"
     local chat_id="$2"
     local response
+    
+    # Check if curl is available for Telegram API calls
+    if ! command -v curl &> /dev/null; then
+        echo "Warning: curl not available, cannot send Telegram messages" >&2
+        return 1
+    fi
+    
     response=$(curl -s "https://api.telegram.org/bot$CONFIG_BOT_TOKEN/sendMessage" \
         -d chat_id="$chat_id" \
         -d "parse_mode=html" \
@@ -229,13 +236,21 @@ if [[ -z "$CONFIG_TARGET" || -z "$CONFIG_BOT_TOKEN" || -z "$CONFIG_CHATID" ]]; t
     die "Please set all mandatory variables in config.env: CONFIG_TARGET, CONFIG_BOT_TOKEN, CONFIG_CHATID."
 fi
 
+# Check for required tools
+required_tools=("curl" "tput" "nproc")
+for tool in "${required_tools[@]}"; do
+    if ! command -v "$tool" &> /dev/null; then
+        die "Required tool '$tool' not found. Please install it first."
+    fi
+done
+
 # Set error chat ID to main chat ID if not specified
 if [[ -z "$CONFIG_ERROR_CHATID" ]]; then
     CONFIG_ERROR_CHATID="$CONFIG_CHATID"
 fi
 
 # Cleanup old files
-rm -f "out/error.log" "out/.lock" "$ROOT_DIRECTORY/build.log"
+rm -f "out/error.log" "out/.lock" "$ROOT_DIRECTORY/build.log" 2>/dev/null || true
 
 # Jobs Configuration
 CORE_COUNT=$(nproc --all)
@@ -245,6 +260,16 @@ CONFIG_COMPILE_JOBS=$CORE_COUNT
 # Sync sources if requested
 if [[ -n "$SYNC" ]]; then
     echo -e "$BOLD_GREEN\nStarting to sync sources...$RESET\n"
+
+    # Check if repo command is available
+    if ! command -v repo &> /dev/null; then
+        die "repo command not found. Please install repo tool first."
+    fi
+
+    # Check if we're in a repo directory
+    if [ ! -d ".repo" ]; then
+        die ".repo directory not found. Please run this script from Android source root directory or initialize repo first."
+    fi
 
     details="<b>• ROM:</b> <code>$ROM_NAME</code>\n<b>• DEVICE:</b> <code>$DEVICE</code>\n<b>• JOBS:</b> <code>$CONFIG_SYNC_JOBS Cores</code>"
     sync_start_message=$(generate_telegram_message "🟡" "Syncing sources..." "$details")
@@ -291,9 +316,27 @@ build_message_id=$(send_message "$build_start_message" "$CONFIG_CHATID")
 build_start_time=$(date -u +%s)
 
 echo -e "$BOLD_GREEN\nSetting up build environment...$RESET"
-source build/envsetup.sh
+if [ -f "build/envsetup.sh" ]; then
+    source build/envsetup.sh
+else
+    build_failed_message=$(generate_telegram_message "🔴" "ROM compilation failed" "" "build/envsetup.sh not found. Please run this script from Android source root directory.")
+    edit_message "$build_failed_message" "$CONFIG_CHATID" "$build_message_id"
+    if [[ "$CONFIG_SEND_STICKER" == "true" ]]; then
+        send_sticker "$CONFIG_STICKER_URL" "$CONFIG_CHATID"
+    fi
+    die "build/envsetup.sh not found. Please run this script from Android source root directory."
+fi
 
 echo -e "$BOLD_GREEN\nRunning breakfast for \"$DEVICE\"...$RESET"
+if ! command -v breakfast &> /dev/null; then
+    build_failed_message=$(generate_telegram_message "🔴" "ROM compilation failed" "" "breakfast command not found. Please ensure Android build environment is properly set up.")
+    edit_message "$build_failed_message" "$CONFIG_CHATID" "$build_message_id"
+    if [[ "$CONFIG_SEND_STICKER" == "true" ]]; then
+        send_sticker "$CONFIG_STICKER_URL" "$CONFIG_CHATID"
+    fi
+    die "breakfast command not found. Please ensure Android build environment is properly set up."
+fi
+
 breakfast "$DEVICE"
 
 if [ $? -ne 0 ]; then
@@ -306,6 +349,15 @@ if [ $? -ne 0 ]; then
 fi
 
 echo -e "$BOLD_GREEN\nStarting build... (Logs at build.log)$RESET"
+if ! command -v m &> /dev/null; then
+    build_failed_message=$(generate_telegram_message "🔴" "ROM compilation failed" "" "m command not found. Please ensure Android build environment is properly set up.")
+    edit_message "$build_failed_message" "$CONFIG_CHATID" "$build_message_id"
+    if [[ "$CONFIG_SEND_STICKER" == "true" ]]; then
+        send_sticker "$CONFIG_STICKER_URL" "$CONFIG_CHATID"
+    fi
+    die "m command not found. Please ensure Android build environment is properly set up."
+fi
+
 m installclean -j"$CONFIG_COMPILE_JOBS"
 m "$CONFIG_TARGET" -j"$CONFIG_COMPILE_JOBS" > "$ROOT_DIRECTORY/build.log" 2>&1 &
 
